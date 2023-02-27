@@ -1,0 +1,1 @@
+# Wp-thumbnail-slider-and-banner-slider
