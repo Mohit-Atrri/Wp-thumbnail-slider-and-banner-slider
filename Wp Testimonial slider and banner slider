@@ -1,0 +1,88 @@
+//Testimonals
+
+
+   <div class="slider-testi">
+            	   <?php 
+                    $posts = get_posts([
+                      'post_type' => 'testimonials',
+                      'post_status' => 'publish',
+                      'numberposts' => 10
+                      // 'order'    => 'ASC'
+                    ]);
+                    foreach ($posts as $testimonial) {  //var_dump($testimonial); ?>
+                <div class="column-main">
+                    <div class="content-testi  d-flex align-items-center">
+                        <img src="<?php echo get_the_post_thumbnail_url($testimonial->ID); ?>" alt="" class="img-fluid">
+                        <div class="text-main-tstri position-relative">
+                            <h2><?php echo get_field('heading',$testimonial->ID); ?></h2>
+                            <ul class="icon-stars p-0 d-flex">
+                                  <?php for($i=1; $i<=get_field('star_rating',$testimonial->ID); $i++){ ?>
+                                <li class="list-unstyled"><i class="fa-solid fa-star"></i></li>
+                                 <?php } ?>
+                              <!--   <li class="list-unstyled"><i class="fa-solid fa-star"></i></li>
+                                <li class="list-unstyled"><i class="fa-solid fa-star"></i></li>
+                                <li class="list-unstyled"><i class="fa-solid fa-star"></i></li>
+                                <li class="list-unstyled"><i class="fa-solid fa-star"></i></li> -->
+                            </ul>
+                            <p>   <?php echo $testimonial->post_content; ?></p>
+                            <span class="autohr"><?php echo $testimonial->post_title; ?> </span>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+
+
+            </div>
+            
+            
+            //Banner
+            
+            
+    <section class="banner-slides">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="4000">
+          <div class="carousel-indicators">
+            <?php 
+            $f=0;
+          
+            while( have_rows('slider') ): the_row(); 
+            $image = get_sub_field('image');
+            ?>
+
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="<?php echo $f; ?>" <?php if($f==0){ ?> class="active"<?php } ?> aria-current="true" aria-label="Slide <?php echo $f; ?>"></button>
+            <?php $f++; endwhile; wp_reset_query();?>
+
+          </div>
+          <div class="carousel-inner">
+
+
+
+                <?php 
+                    $i=0;
+                    while( have_rows('slider') ): the_row(); 
+                    $image = get_sub_field('image');
+                    ?>
+                    <div class="carousel-item <?php if($i==0){ ?> active<?php } ?>" data-bs-interval="10000">
+                      <div class="slide-img"><img src="<?php the_sub_field('picture'); ?>" class="d-block" alt="..."/></div>
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="banner-sub-heading"><?php the_sub_field('heading'); ?></h5>
+                        <h1 class="banner-heading"><?php the_sub_field('sub_heading'); ?></h1>
+                        <p class="banner-content"><?php the_sub_field('description'); ?></p>
+                        <a href="<?php the_sub_field('button_link'); ?>" class="banner-btn"><?php the_sub_field('button_text'); ?></a>
+                      </div>
+                    </div>
+
+                <?php $i++; endwhile; ?>
+
+
+            
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+    </section>
